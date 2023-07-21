@@ -4,6 +4,10 @@ import options
 from pathlib import Path
 import os,sys
 
+os.system(f'mkdir {options.path_keys}')
+os.system(f'mkdir {options.path_conf}')
+os.system(f'mkdir {options.path_list}')
+
 print('Идет генерация ключей клиентов: ')
 
 i=1
@@ -25,7 +29,7 @@ while i<=options.count:
     os.system(f'echo "[Peer]" >> {options.path_conf}/{options.name}-{i}{options.endname}.conf')
     os.system(f'echo "Endpoint = {options.endpoint}" >> {options.path_conf}/{options.name}-{i}{options.endname}.conf')
     os.system(f'echo "AllowedIPs = {options.allowed_ips}" >> {options.path_conf}/{options.name}-{i}{options.endname}.conf')
-    os.system(f'echo "PublicKey = {options.public_key_server}" >> {options.path_conf}/{options.name}-{i}{options.endname}.conf')
+    os.system(f'echo "PublicKey = $(cat {options.path_server}/public.pub)" >> {options.path_conf}/{options.name}-{i}{options.endname}.conf')
     os.system(f'echo "PresharedKey = $(cat {options.path_keys}/{options.name}-{i}.psk)" >> {options.path_conf}/{options.name}-{i}{options.endname}.conf')
     os.system(f'qrencode  -r "{options.path_conf}/{options.name}-{i}{options.endname}.conf" -o {options.path_conf}/{options.name}-{i}{options.endname}.png')
     print(options.name +'-'+ str(i) + options.endname + '.png')
